@@ -123,4 +123,30 @@ public class Figures
         Assert.NotNull(t);
         Assert.Equal(c.Perimeter(), t.Perimeter());
     }
+    
+    [Fact]
+    public void Rectangle_ToString()
+    {
+        var c = new Rectangle(1, 2);
+        
+        Assert.Equal("rectangle 1 2", c.ToString());
+    }
+    
+    [Fact]
+    public void Circle_ToString()
+    {
+        var c = new Circle(1);
+        var c1 = new Circle(1.2);
+        
+        Assert.Equal("circle 1", c.ToString());
+        Assert.Equal("circle 1.2", c1.ToString());
+    }
+    
+    [Fact]
+    public void Triangle_ToString()
+    {
+        var c = new Triangle(1, 2, 3);
+        
+        Assert.Equal("triangle 1 2 3", c.ToString());
+    }
 }
