@@ -1,4 +1,6 @@
-﻿namespace Project1.Figures;
+﻿using Project1.Helpers;
+
+namespace Project1.Figures;
 
 public class Circle : IFigure
 {
@@ -12,7 +14,7 @@ public class Circle : IFigure
         
         _perimeter = 2.0 * Math.PI * radius;
         
-        if(double.IsPositiveInfinity(_perimeter) || double.IsNegativeInfinity(_perimeter))
+        if(FigureRules.DoesOverflow(_perimeter))
             throw new OverflowException();
         
         _radius = radius;

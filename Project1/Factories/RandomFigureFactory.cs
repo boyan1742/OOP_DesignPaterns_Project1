@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Project1.Figures;
+﻿using Project1.Figures;
 
 namespace Project1.Factories;
 
@@ -27,14 +26,28 @@ public class RandomFigureFactory : IFigureFactory
 
         var info = figureTypes[selectedFigure].GetConstructors()[0];
 
-        var paramsInfos = info.GetParameters();
-        object?[] parameters = new object[paramsInfos.Length];
-        for (var i = 0; i < paramsInfos.Length; i++)
+        while (true)
         {
-            parameters[i] = GenerateRandomValueForType(paramsInfos[i].ParameterType);
+            var paramsInfos = info.GetParameters();
+            object?[] parameters = new object[paramsInfos.Length];
+            for (var i = 0; i < paramsInfos.Length; i++)
+            {
+                parameters[i] = GenerateRandomValueForType(paramsInfos[i].ParameterType);
+            }
+
+            IFigure figure;
+
+            try
+            {
+                figure = (IFigure) info.Invoke(parameters);
+            }
+            catch (Exception)
+            {
+                continue;
+            }
+
+            return figure;
         }
-        
-        return (IFigure)info.Invoke(parameters);
     }
 
     private object? GenerateRandomValueForType(Type parameterType)
@@ -50,25 +63,25 @@ public class RandomFigureFactory : IFigureFactory
         {
             byte[] sh = new byte[2];
             _random.NextBytes(sh);
-            return BitConverter.ToInt16(sh, 0);
+            return BitConverter.ToInt16(sh, 0) % 100;
         }
         
         if (parameterType == typeof(ushort))
         {
             byte[] sh = new byte[2];
             _random.NextBytes(sh);
-            return BitConverter.ToUInt16(sh, 0);
+            return BitConverter.ToUInt16(sh, 0) % 100;
         }
         
         if (parameterType == typeof(uint))
-            return (uint)_random.Next();
+            return (uint)_random.Next() % 100;
         if (parameterType == typeof(ulong))
-            return (ulong)_random.NextInt64();
+            return (ulong)_random.NextInt64() % 100;
 
         if (parameterType == typeof(int))
-            return _random.Next();
+            return _random.Next() %  100;
         if (parameterType == typeof(long))
-            return _random.NextInt64();
+            return _random.NextInt64() % 100;
         if (parameterType == typeof(double))
             return _random.NextDouble();
         if (parameterType == typeof(float))

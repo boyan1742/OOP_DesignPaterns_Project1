@@ -2,14 +2,14 @@
 
 namespace Tests;
 
-public class Figures
+public class FiguresTests
 {
     [Fact]
     public void Triangle_ValidParameters()
     {
-        var t = new Triangle(1, 2, 3);
+        var t = new Triangle(3, 4, 5);
 
-        Assert.Equal(6, t.Perimeter());
+        Assert.Equal(12, t.Perimeter());
     }
 
     [Fact]
@@ -105,7 +105,7 @@ public class Figures
     [Fact]
     public void Triangle_Cloneable()
     {
-        var c = new Triangle(1, 2, 3);
+        var c = new Triangle(3, 4, 5);
         
         var t = c.Clone() as Triangle;
 
@@ -145,8 +145,8 @@ public class Figures
     [Fact]
     public void Triangle_ToString()
     {
-        var c = new Triangle(1, 2, 3);
+        var c = new Triangle(3, 4, 5);
         
-        Assert.Equal("triangle 1 2 3", c.ToString());
+        Assert.Equal("triangle 3 4 5", c.ToString());
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Project1.Figures;
+﻿using Project1.Helpers;
+
+namespace Project1.Figures;
 
 public class Triangle : IFigure
 {
@@ -10,13 +12,12 @@ public class Triangle : IFigure
         if (a < 0 || b < 0 || c < 0)
             throw new ArgumentException("The sides must be >= 0");
 
-        checked
-        {
-            int perimeter = a + b + c; //this will throw `OverflowException` if the sum overflows.
-            _perimeter = perimeter;
-        }
-        
-        if (a + b < c || a + c < b || b + c < a)
+        if (FigureRules.DoesOverflow(a, b, c))
+            throw new OverflowException("Triangle's sides are too large.");
+
+        _perimeter = a + b + c;
+
+        if (!FigureRules.IsTriangleRule(a, b, c))
             throw new ArgumentException("These sides don't follow the rules of the triangle");
 
         _a = a;
@@ -25,8 +26,8 @@ public class Triangle : IFigure
     }
 
     public double Perimeter() => _perimeter;
-    
+
     public override string ToString() => $"triangle {_a} {_b} {_c}";
-    
+
     public object Clone() => new Triangle(_a, _b, _c);
 }

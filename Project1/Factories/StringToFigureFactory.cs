@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Reflection;
+﻿using System.Reflection;
 using Project1.Figures;
 
 namespace Project1.Factories;
@@ -8,6 +7,9 @@ public class StringToFigureFactory
 {
     public IFigure? CreateFrom(string representation)
     {
+        if (string.IsNullOrEmpty(representation))
+            return null;
+        
         string[] split = representation.Split(" ");
         string type = char.ToUpper(split[0][0]) + split[0][1..];
         
@@ -16,7 +18,7 @@ public class StringToFigureFactory
         if (figureType is null)
             return null;
 
-        var ctors = figureType.GetConstructors(BindingFlags.Public);
+        var ctors = figureType.GetConstructors();
         foreach (var info in ctors)
         {
             if (info.GetParameters().Length != split.Length - 1) 
